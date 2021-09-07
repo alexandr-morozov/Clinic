@@ -40,6 +40,7 @@ function menu($clinic)
                 break;
         }
     }
+    $clinic -> writingFile();
 
 }
 

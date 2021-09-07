@@ -24,4 +24,9 @@ class Person{
         echo "Name: " . $this->name . "\n";
     }
 
+    function writeFilePerson($dataName)
+    {
+        fwrite($dataName, $this->name. " ". $this->age. " ");
+    }
+
 }

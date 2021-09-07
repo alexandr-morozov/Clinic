@@ -22,4 +22,10 @@ class Patient extends Person
         parent::printPerson();
         echo "Illness: " . $this->illness . "\n";
     }
+
+    function writeFileStatus($dataName)
+    {
+        fwrite($dataName, $this->illness. " ");
+    }
+
 }

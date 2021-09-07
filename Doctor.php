@@ -21,4 +21,9 @@ class Doctor extends Person
         parent::printPerson();
         echo "Speciality: " . $this->speciality . "\n";
     }
+
+    function writeFileStatus($dataName)
+    {
+        fwrite($dataName, $this->speciality. " ");
+    }
 }

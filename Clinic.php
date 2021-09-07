@@ -1,3 +1,4 @@
+
 <?php
 const START_COUNT_ELEMENTS = 0;
 
@@ -30,10 +31,12 @@ class Clinic
         return self::$instance;
     }
 
-    function inputListPatient() {
+    function inputListPatient()
+    {
         echo "Count of patients: ";
         $newCountPatient = setNumber();
-        for ($i = $this->countPatient; $i < ($this->countPatient+$newCountPatient); $i++) {
+        for ($i = $this->countPatient; $i < ($this->countPatient+$newCountPatient); $i++)
+        {
             echo"-------------------------";
             echo "\nInput patient №". ($i+1). "\n";
             $newPatient = new Patient;
@@ -43,10 +46,12 @@ class Clinic
         $this->countPatient = $newCountPatient + $this->countPatient;
     }
 
-    function inputListDoctor() {
+    function inputListDoctor()
+    {
         echo "Count of doctors: ";
         $newCountDoctor = setNumber();
-        for ($i = $this->countDoctor; $i < ($newCountDoctor+$this->countDoctor); $i++) {
+        for ($i = $this->countDoctor; $i < ($newCountDoctor+$this->countDoctor); $i++)
+        {
             echo"-------------------------";
             echo "\nInput doctor №". ($i+1). "\n";
             $newDoctor = new Doctor;
@@ -56,19 +61,22 @@ class Clinic
         $this->countDoctor = $newCountDoctor + $this->countDoctor;
     }
 
-    function printListPatient() {
+    function printListPatient()
+    {
         echo"-------------------------";
         echo"\nInfo about patients for ";
         echo date('r');
         echo"\n";
-        for ($i = 0; $i < $this->countPatient; $i++) {
+        for ($i = 0; $i < $this->countPatient; $i++)
+        {
             echo"-------------------------";
             echo"\nPatient №". ($i+1). "\n";
             $this->listPatients[$i]->printElement();
         }
     }
 
-    function printListDoctor() {
+    function printListDoctor()
+    {
         echo"-------------------------";
         echo"\nInfo about doctors";
         echo date('r');
@@ -79,5 +87,25 @@ class Clinic
             echo "\nDoctor №". ($i+1). "\n";
             $this->listDoctors[$i]->printElement();
         }
+    }
+    function writingFile()
+    {
+        $dataPatient = fopen("listPatient.txt", "a");
+        for ($i = 0; $i < $this->countPatient; $i++)
+        {
+            $this->listPatients[$i]->writeFilePerson($dataPatient);
+            $this->listPatients[$i]->writeFileStatus($dataPatient);
+            fwrite($dataPatient, "\n");
+        }
+        fclose($dataPatient);
+
+        $dataDoctor = fopen("listDoctor.txt", "a");
+        for ($i = 0; $i < $this->countDoctor; $i++)
+        {
+            $this->listDoctors[$i]->writeFilePerson($dataDoctor);
+            $this->listDoctors[$i]->writeFileStatus($dataDoctor);
+            fwrite($dataDoctor, "\n");
+        }
+        fclose($dataDoctor);
     }
 }
