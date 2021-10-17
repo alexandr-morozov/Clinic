@@ -46,4 +46,5 @@ function menu($clinic)
 
 $factory = new Factory;
 $clinic = $factory->build();
+$clinic->readFile();
 menu($clinic);

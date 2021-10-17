@@ -90,22 +90,64 @@ class Clinic
     }
     function writingFile()
     {
+        $oldFilePatient = file("listPatient.txt");
+        $oldCountPatient = count($oldFilePatient);
         $dataPatient = fopen("listPatient.txt", "a");
-        for ($i = 0; $i < $this->countPatient; $i++)
+        if ($oldCountPatient != 0)
+        {
+            fwrite($dataPatient, "\n");
+        }
+        for ($i = $oldCountPatient; $i < $this->countPatient-1; $i++)
         {
             $this->listPatients[$i]->writeFilePerson($dataPatient);
             $this->listPatients[$i]->writeFileStatus($dataPatient);
             fwrite($dataPatient, "\n");
         }
+        $this->listPatients[$this->countPatient-1]->writeFilePerson($dataPatient);
+        $this->listPatients[$this->countPatient-1]->writeFileStatus($dataPatient);     // write last element without "\n"
         fclose($dataPatient);
 
+        $oldFileDoctor = file("listDoctor.txt");
+        $oldCountDoctor = count($oldFileDoctor);
         $dataDoctor = fopen("listDoctor.txt", "a");
-        for ($i = 0; $i < $this->countDoctor; $i++)
+        if ($oldCountDoctor != 0)
+        {
+            fwrite($dataDoctor, "\n");
+        }
+        for ($i = $oldCountDoctor; $i < $this->countDoctor-1; $i++)
         {
             $this->listDoctors[$i]->writeFilePerson($dataDoctor);
             $this->listDoctors[$i]->writeFileStatus($dataDoctor);
             fwrite($dataDoctor, "\n");
         }
+        $this->listDoctors[$this->countDoctor-1]->writeFilePerson($dataDoctor);
+        $this->listDoctors[$this->countDoctor-1]->writeFileStatus($dataDoctor);
         fclose($dataDoctor);
+    }
+
+    function readFile()
+    {
+        $dataPatient = fopen("listPatient.txt", "r");
+        $this->countPatient = START_COUNT_ELEMENTS;
+        while (!feof($dataPatient))
+        {
+            $this->listPatients[$this->countPatient] = new Patient;
+            $getFilePatient = fgets($dataPatient);
+            $getFilePatient = explode(" ", $getFilePatient);
+            $this->listPatients[$this->countPatient]->readFilePerson($getFilePatient[0], $getFilePatient[1]);
+            $this->listPatients[$this->countPatient]->readFileStatus($getFilePatient[2]);
+            $this->countPatient++;
+        }
+        $dataDoctor = fopen("listDoctor.txt", "r");
+        $this->countDoctor = START_COUNT_ELEMENTS;
+        while (!feof($dataDoctor))
+        {
+            $this->listDoctors[$this->countDoctor] = new Doctor;
+            $getFileDoctor = fgets($dataDoctor);
+            $getFileDoctor = explode(" ", $getFileDoctor);
+            $this->listDoctors[$this->countDoctor]->readFilePerson($getFileDoctor[0], $getFileDoctor[1]);
+            $this->listDoctors[$this->countDoctor]->readFileStatus($getFileDoctor[2]);
+            $this->countDoctor++;
+        }
     }
 }
