@@ -26,4 +26,8 @@ class Doctor extends Person
     {
         fwrite($dataName, $this->speciality. " ");
     }
+    function readFileStatus($dataSpeciality)
+    {
+        $this->speciality = $dataSpeciality;
+    }
 }

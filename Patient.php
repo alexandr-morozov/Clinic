@@ -28,4 +28,8 @@ class Patient extends Person
         fwrite($dataName, $this->illness. " ");
     }
 
+    function readFileStatus($dataIllness)
+    {
+        $this->illness = $dataIllness;
+    }
 }

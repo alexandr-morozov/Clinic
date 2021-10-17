@@ -29,4 +29,10 @@ class Person{
         fwrite($dataName, $this->name. " ". $this->age. " ");
     }
 
+    function readFilePerson($fileName, $fileAge)
+    {
+        $this->name = $fileName;
+        $this->age = $fileAge;
+    }
+
 }
