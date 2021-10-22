@@ -101,12 +101,15 @@ class Clinic
 
     function writingFile()
     {
+        $dataPatient = fopen("listPatient.txt", "a");
         $oldFilePatient = file("listPatient.txt");
         $oldCountPatient = count($oldFilePatient);
-        $dataPatient = fopen("listPatient.txt", "a");
-        if ($oldCountPatient != 0 and $oldCountPatient != $this->countPatient)
+        if ($oldCountPatient != $this->countPatient)
         {
-            fwrite($dataPatient, "\n");
+            if($oldCountPatient != 0)         ///Check for first entry
+            {
+                fwrite($dataPatient, "\n");
+            }
             for ($i = $oldCountPatient; $i < $this->countPatient - 1; $i++) {
                 $this->listPatients[$i]->writeFilePerson($dataPatient);
                 $this->listPatients[$i]->writeFileStatus($dataPatient);
@@ -117,12 +120,15 @@ class Clinic
         }
         fclose($dataPatient);
 
+        $dataDoctor = fopen("listDoctor.txt", "a");
         $oldFileDoctor = file("listDoctor.txt");
         $oldCountDoctor = count($oldFileDoctor);
-        $dataDoctor = fopen("listDoctor.txt", "a");
-        if ($oldCountDoctor != 0 and $oldCountDoctor != $this->countDoctor)
+        if ($oldCountDoctor != $this->countDoctor)
         {
-            fwrite($dataDoctor, "\n");
+            if ($oldCountDoctor != 0)         ///Check for first entry
+            {
+                fwrite($dataDoctor, "\n");
+            }
             for ($i = $oldCountDoctor; $i < $this->countDoctor - 1; $i++)
             {
                 $this->listDoctors[$i]->writeFilePerson($dataDoctor);
@@ -139,7 +145,7 @@ class Clinic
     {
         if (!file_exists("listPatient.txt"))
         {
-            echo "Data of patients is empty";
+            echo "Data of patients is empty\n";
         } else {
             $dataPatient = fopen("listPatient.txt", "r");
             $this->countPatient = START_COUNT_ELEMENTS;
@@ -154,7 +160,7 @@ class Clinic
         }
         if (!file_exists("listDoctor.txt"))
         {
-            echo "Data of doctors is empty";
+            echo "\nData of doctors is empty";
         } else {
             $dataDoctor = fopen("listDoctor.txt", "r");
             $this->countDoctor = START_COUNT_ELEMENTS;
