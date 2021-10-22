@@ -88,6 +88,17 @@ class Clinic
             $this->listDoctors[$i]->printElement();
         }
     }
+
+    function getInfoPatientByName()
+    {
+        getInfoByName($this->listPatients, $this->countPatient);
+    }
+
+    function getInfoDoctorByName()
+    {
+        getInfoByName($this->listDoctors, $this->countDoctor);
+    }
+
     function writingFile()
     {
         $oldFilePatient = file("listPatient.txt");
